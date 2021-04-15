@@ -26,7 +26,8 @@ toggleSwitch.addEventListener("change", switchTheme, false);
 $(document).ready(function () {
     $(window).scroll(function () {
         var scroll = $(window).scrollTop();
-        if (scroll > 300 && !x.matches) {
+        let x = window.matchMedia("(prefers-color-scheme: dark)");
+        if (scroll > 300 && localStorage.getItem("theme") == "light") {
             $(".imagenLogo").css("filter", "invert(0)");
         } else {
             $(".imagenLogo").css("filter", "invert(1)");
