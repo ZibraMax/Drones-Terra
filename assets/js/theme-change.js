@@ -1,22 +1,35 @@
-const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
-const currentTheme = localStorage.getItem('theme');
+const toggleSwitch = document.querySelector(
+    '.theme-switch input[type="checkbox"]'
+);
+const currentTheme = localStorage.getItem("theme");
+const x = window.matchMedia("(prefers-color-scheme: dark)");
+//
 
-if (currentTheme) {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-  
-    if (currentTheme === 'dark') {
-        toggleSwitch.checked = true;
-    }
+if (x.matches) {
+    toggleSwitch.checked = true;
+    localStorage.setItem("theme", "dark");
+    document.documentElement.setAttribute("data-theme", "dark");
 }
 
 function switchTheme(e) {
     if (e.target.checked) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+    } else {
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("theme", "light");
     }
-    else {        document.documentElement.setAttribute('data-theme', 'light');
-          localStorage.setItem('theme', 'light');
-    }    
 }
 
-toggleSwitch.addEventListener('change', switchTheme, false);
+toggleSwitch.addEventListener("change", switchTheme, false);
+
+$(document).ready(function () {
+    $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+        if (scroll > 300 && !x.matches) {
+            $(".imagenLogo").css("filter", "invert(0)");
+        } else {
+            $(".imagenLogo").css("filter", "invert(1)");
+        }
+    });
+});
